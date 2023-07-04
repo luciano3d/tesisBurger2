@@ -1,0 +1,9 @@
+Low Poly cartoon urban town pack:
+Ready to use mobile ready game assets
+includede with a demo scene , along with prefab of all the objects .
+ 
+features:
+-low poly models
+-hand painted texture
+-Ideal for mobile game.
+-total 24 beautiful assets.
