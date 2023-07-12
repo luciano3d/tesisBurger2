@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform target;
     private Vector3 offset;
     public Transform referenceCamera;
     public Transform playerTransform;
@@ -15,15 +14,11 @@ public class CameraController : MonoBehaviour
     {
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        //Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, offset.z + target.position.z);
-        //transform.position = Vector3.Lerp(transform.position,target.position+offset,10*Time.deltaTime);
-        
         if (GameManager.instance.isPlaying)
         {
-            transform.position = Vector3.Lerp(transform.position,target.position+offset,10*Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, playerTransform.position+offset,10*Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, referenceCamera.rotation, Time.deltaTime * 10); 
 
 
@@ -36,20 +31,31 @@ public class CameraController : MonoBehaviour
 
     private void GameCameraTransition() 
     {
-        
-        if (Vector3.Distance(transform.position,referenceCamera.position)>.01f)
+        print(Vector3.Distance(transform.position, referenceCamera.position));
+        if (Vector3.Distance(transform.position,referenceCamera.position) > 7f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, referenceCamera.position, Time.deltaTime * 10); // velocidad de posicion
+            transform.position = Vector3.Lerp(transform.position, referenceCamera.position, Time.deltaTime * 1.25f); // velocidad de posicion
+
             Vector3 relativepos = playerTransform.position - transform.position;
             Quaternion lookrot = Quaternion.LookRotation(relativepos, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, lookrot, Time.deltaTime * 10); //velocidad de rotacion
+            transform.rotation = Quaternion.Lerp(transform.rotation, lookrot, Time.deltaTime * 10f); //velocidad de rotacion
+
         }
         else
         {
-            transform.position = referenceCamera.position;
-            enterTransition = false;
-            offset = transform.position - target.position;
-            Invoke("StartGame", .12f);
+            transform.position = Vector3.Lerp(transform.position, playerTransform.position+offset, 1.25f *Time.deltaTime);
+            if (Vector3.Distance(transform.rotation.eulerAngles, referenceCamera.rotation.eulerAngles) > .1f)
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, referenceCamera.rotation, Time.deltaTime * 3);
+                offset = referenceCamera.position - playerTransform.position;
+            }
+            else
+            {
+               // transform.position = referenceCamera.position;
+                enterTransition = false;
+                offset = referenceCamera.position - playerTransform.position;
+                Invoke("StartGame", .05f);
+            }
         }
     }
 
@@ -62,5 +68,5 @@ public class CameraController : MonoBehaviour
     {
         GameManager.instance.isPlaying = true;
     }
-
+    
 }
