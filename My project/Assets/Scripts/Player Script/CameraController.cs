@@ -13,19 +13,20 @@ public class CameraController : MonoBehaviour
     void Start()
     {
     }
-
+    
     void Update()
+    {
+        if (enterTransition)
+        {
+            GameCameraTransition();
+        }
+    }
+    void FixedUpdate()
     {
         if (GameManager.instance.isPlaying)
         {
             transform.position = Vector3.Lerp(transform.position, playerTransform.position+offset,10*Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, referenceCamera.rotation, Time.deltaTime * 10); 
-
-
-        }
-        if (enterTransition)
-        {
-            GameCameraTransition();
         }
     }
 
