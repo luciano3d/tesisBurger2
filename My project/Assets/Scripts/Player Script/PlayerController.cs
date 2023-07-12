@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
             transform.position = pos;
             
         }
-            anim.SetFloat("moveSpeed", Vector3.Magnitude(rb.velocity));
+            anim.SetFloat("moveSpeed",Vector3.Magnitude(rb.velocity) /50);
 
     }
 
