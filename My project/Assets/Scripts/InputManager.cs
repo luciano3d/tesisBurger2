@@ -18,7 +18,7 @@ public class InputManager : MonoBehaviour
         
     }
 
-    
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -35,7 +35,18 @@ public class InputManager : MonoBehaviour
             firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
         }
+        //mouse Input
         SwipeDetection();
+
+        //teclado input
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            playerScript.MoveRight();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            playerScript.MoveLeft();
+        }
     }
 
     public void SwipeDetection()

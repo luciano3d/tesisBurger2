@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
     public Rigidbody rb;
     public float jumpForce;
+    public float gravityForce;
     private bool isGrounded;
     public float speedMultiplier = 2;
     public float maxSpeed = 70;
@@ -31,24 +32,16 @@ public class PlayerController : MonoBehaviour
         if (GameManager.instance.isPlaying)
         {
             Vector3 velocity = rb.velocity;
-
             velocity.z = Mathf.Lerp(velocity.z, forwardSpeed, forwardSpeed * Time.deltaTime);
+            
+            velocity.y -=Time.deltaTime * gravityForce;
+            velocity.y = Mathf.Clamp(velocity.y, -20, 15);
             //velocity.z = forwardSpeed;
             rb.velocity = velocity;
+
             pos.z = transform.position.z;
             pos.y = transform.position.y;
             pos.x = Mathf.Lerp(pos.x, posxTarget, horizontalSpeed * Time.deltaTime);
-
-
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                MoveRight();
-            }
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                MoveLeft();
-            }
-
 
             transform.position = pos;
             
@@ -96,9 +89,10 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
             isGrounded = false;
             anim.SetBool("isJumping",true);
+            //Invoke("JumpDown", .5f);
         }
         
     }
@@ -111,11 +105,20 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isJumping", false);
         }
     }
-
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Floor"))
+    //    {
+    //        isGrounded = false;
+    //    }
+    //}
     public void SpeedUp() 
     {
-        
         if (forwardSpeed < maxSpeed) forwardSpeed += speedMultiplier;
+    }
 
+    private void JumpDown()
+    {
+        rb.AddForce(Vector3.up * -jumpForce, ForceMode.VelocityChange);
     }
 }

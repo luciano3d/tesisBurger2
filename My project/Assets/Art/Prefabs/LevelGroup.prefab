@@ -306,7 +306,6 @@ MonoBehaviour:
   forwardCityPosition: 343.35
   txtCoins: {fileID: 3101923792138057533}
   limitedTime: 2
-  SpeedUpMagnitude: 5
 --- !u!1 &3101923793319192932
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,6 +699,14 @@ PrefabInstance:
     - target: {fileID: 168820, guid: 569df18f04e5a7e4ca21b5912c48fa57, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 435174, guid: 569df18f04e5a7e4ca21b5912c48fa57, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 435174, guid: 569df18f04e5a7e4ca21b5912c48fa57, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.15
       objectReference: {fileID: 0}
     - target: {fileID: 477384, guid: 569df18f04e5a7e4ca21b5912c48fa57, type: 3}
       propertyPath: m_RootOrder
